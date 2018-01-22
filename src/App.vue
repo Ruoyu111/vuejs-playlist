@@ -6,7 +6,12 @@
 </template>
 
 <script>
+import Ninjas from './Ninjas.vue'
+
 export default {
+    components: {
+        'ninjas': Ninjas
+    },
     data () {
         return {
             title: 'Ninja App'
