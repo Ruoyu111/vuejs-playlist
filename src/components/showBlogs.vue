@@ -5,7 +5,7 @@
         <div v-rainbow v-for="blog in filteredBlogs" class="single-blog">
             <router-link v-bind:to="'/blog/' + blog.id"><h2>{{ blog.title | to-uppercase }}</h2></router-link>
             <article>
-                {{ blog.body | snippet }}
+                {{ blog.content | snippet }}
             </article>
         </div>
     </div>
@@ -25,8 +25,21 @@ export default {
 
     },
     created() {
-        this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data) {
-            this.blogs = data.body.slice(0, 10);
+        // this.$http.get('https://vue-playlist-f3053.firebaseio.com/posts.json').then(function(data) {
+        //     return data.json();
+        // }).then(function(data) {
+        //     console.log(data);
+        // });
+        this.$http.get('https://vue-playlist-f3053.firebaseio.com/posts.json').then(function(data) {
+            var blogsArray = [];
+            for (let key in data.body) {
+                // console.log(data.body[key]);
+                data.body[key].id = key;
+                blogsArray.push(data.body[key]);
+            }
+            // console.log(data.body);
+            // console.log(blogsArray);
+            this.blogs = blogsArray;
         });
     },
     computed: {
